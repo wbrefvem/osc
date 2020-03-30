@@ -42,7 +42,7 @@ export PATH=$PATH:$(pwd)/osc
 
 The first command you should run is `osc crawl`, i.e.,
 ```
-$ osc crawl -d http://quotes.toscrape.com -s http://127.0.0.1:8080
+$ osc crawl --domain http://quotes.toscrape.com --server http://127.0.0.1:8080
 2020/03/29 22:33:42 started crawl for domain http://quotes.toscrape.com
 
 --
@@ -54,13 +54,13 @@ Please wait a bit and check back with
 osc get-domain <your domain>
 ```
 
-How long you should wait before running `osc get-domain` depends on the size of your site, but when ready, do, e.g.:
+How long you should wait before running `osc get-domain` depends on the size of your site, but when ready:
 
 ```
 $ osc get-domain quotes.toscrape.com -s http://127.0.0.1:8080
 ```
 
-This will print to your console a JSON sitemap that will contain the status of the crawl as well as the complete list of crawled urls. The data will be structures as such:
+This will print to your console a JSON sitemap that will contain the status of the crawl as well as the complete list of crawled urls. Note that the sitemap may not be complete if the status is `pending`. The data will be structures as such:
 
 ```
 {
@@ -72,14 +72,32 @@ This will print to your console a JSON sitemap that will contain the status of t
 
 ```
 
+### CAVEATS  
+If you're running the server locally (not recommended): 
+* You'll need python 3.7+. It is recommended that you run it in a virtualenv, i.e.:
+  ```
+    $ cd <PROJECT_ROOT>/crawler
+    $ virtualenv .venv -p python3
+    $ source .venv/bin/activate
+    $ pip install -r requirements.txt
+    $ cd ..
+    $ ./osc-server # Assumes you've already built the go server
+  ```
+* You'll need to set two env vars:
+  ```
+    $ export WORK_DIR=$(pwd)/crawler # assumes you're in the project root
+    $ export DATA_DIR=$(pwd)         # can be anywhere your user can write to
+  ```
+
 ## Building from source
 
 There are three make targets available:
 
 ```
 $ make server
-...
+go build -o osc-server ./server
 $ make client
-...
+go build -o osc ./client
 $ make docker
+docker build . 
 ```
