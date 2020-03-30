@@ -47,6 +47,12 @@ func doCrawl(cmd *cobra.Command, args []string) {
 	respBody, _ := ioutil.ReadAll(resp.Body)
 	log.Println(string(respBody))
 
+	//reader := bufio.NewReader(os.Stdin)
+	fmt.Print("\n--\n\n")
+	fmt.Print("The spiders are now crawling your domain!\n")
+	fmt.Print("Depending on the size of your site, this could take awhile.\n")
+	fmt.Print("Please wait a bit and check back with\n")
+	fmt.Print("\nosc get-domain <your domain>\n\n")
 }
 
 var crawlCmd = &cobra.Command{
