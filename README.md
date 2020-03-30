@@ -60,6 +60,26 @@ How long you should wait before running `osc get-domain` depends on the size of 
 $ osc get-domain quotes.toscrape.com -s http://127.0.0.1:8080
 ```
 
+This will print to your console a JSON sitemap that will contain the status of the crawl as well as the complete list of crawled urls. The data will be structures as such:
+
+```
+{
+    "last-crawled": <utc timestamp>,
+    "domain": <your domain>,
+    "crawl-status": <pending | completed>,
+    "data": [list of urls crawled],
+}
+
+```
+
 ## Building from source
 
+There are three make targets available:
 
+```
+$ make server
+...
+$ make client
+...
+$ make docker
+```
