@@ -2,6 +2,20 @@
 
 This is a client-server tool that crawls a single website.
 
+## Contents
+- [One Site Crawler](#one-site-crawler)
+  - [Contents](#contents)
+  - [Architecture](#architecture)
+  - [Usage](#usage)
+    - [CAVEATS](#caveats)
+  - [Building from source](#building-from-source)
+
+## Architecture
+
+This is project has a simple client-server architecture. The server is a Go server that starts the crawler and serves up the results of the crawl. It will queue up to 4 crawl requests before refusing requests. The crawler is a simple Python app built with [Scrapy](https://scrapy.org/).
+
+The client is a Go CLI that sends a crawl request to the server. It can also fetch the results of any domain that has been crawled.
+
 ## Usage
 
 First, deploy the server. The easiest way is to run the Docker container:
