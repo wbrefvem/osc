@@ -1,0 +1,42 @@
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  labels:
+    app: osc
+  name: osc
+  namespace: osc
+spec:
+  selector:
+    matchLabels:
+      app: osc
+  strategy:
+    rollingUpdate:
+      maxSurge: 25%
+      maxUnavailable: 25%
+    type: RollingUpdate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: osc
+    spec:
+      volumes:
+        - name: osc
+          persistentVolumeClaim:
+            claimName: osc
+      containers:
+      - image: wbrefvem/osc:0.0.21
+        imagePullPolicy: IfNotPresent
+        name: osc
+        ports:
+        - containerPort: 8080
+          protocol: TCP
+        volumeMounts:
+        - mountPath: "/opt/data"
+          name: osc
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+

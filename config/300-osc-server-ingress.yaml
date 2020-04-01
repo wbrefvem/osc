@@ -1,0 +1,20 @@
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  annotations:
+    app: osc
+    nginx.ingress.kubernetes.io/rewrite-target: /
+  name: osc
+  namespace: osc
+spec:
+  rules:
+  - host: osc.apps-crc.testing
+    http:
+      paths:
+      - backend:
+          serviceName: osc
+          servicePort: 80
+          targetPort: 8080
+        path: /
+status:
+  loadBalancer: {}
