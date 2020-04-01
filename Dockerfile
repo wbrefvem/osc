@@ -6,9 +6,12 @@ RUN pip3 install Scrapy
 
 COPY ./crawler /opt/crawler
 COPY ./server /opt/server
+COPY ./client /opt/client
 
 WORKDIR /opt
 RUN go build -o osc-server ./server
+RUN go build -o osc ./client
+RUN mv ./osc /usr/local/bin/
 
 WORKDIR /opt/crawler
 RUN pip3 install -r requirements.txt
